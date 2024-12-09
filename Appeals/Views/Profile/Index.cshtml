@@ -1,0 +1,79 @@
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<div class="profile-container">
+    <h1>User Profile</h1>
+    <form id="userProfileForm" asp-controller="Profile" asp-action="Save" method="post">
+        <div class="form-group">
+            <label class="Name">Name</label>
+            <input class="Name" class="form-control" required />
+            <span validation="Name" class="error-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="Surname">Surname</label>
+            <input class="Surname" class="form-control" required />
+            <span validation="Surname" class="error-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="MiddleName">MiddleName</label>
+            <input class="MiddleName" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label class="DateOfBirth">DateOfBirth</label>
+            <input class="DateOfBirth" type="date" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label class="Email">Email</label>
+            <input class="Email" type="email" class="form-control" required />
+            <span validation="Email" class="error-message"></span>
+        </div>
+
+        <div class="address-group">
+            <div class="form-group">
+                <label class="City">City</label>
+                <div class="input-with-suggestions">
+                    <input class="City" class="form-control" required />
+                    <div class="suggestions" id="citySuggestions"></div>
+                </div>
+                <span validation="City" class="error-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="Street">Street</label>
+                <div class="input-with-suggestions">
+                    <input class="Street" class="form-control" required />
+                    <div class="suggestions" id="streetSuggestions"></div>
+                </div>
+                <span validation="Street" class="error-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="House">House</label>
+                <input class="House" class="form-control" required />
+                <span validation="House" class="error-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="Apartment">Apartment</label>
+                <input class="Apartment" class="form-control" required />
+                <span validation="Apartment" class="error-message"></span>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="button" id="exitBtn" class="btn btn-secondary">Exit</button>
+            <button type="button" id="cancelBtn" class="btn btn-secondary hidden">Cancel</button>
+            <button type="submit" id="saveBtn" class="btn btn-primary hidden">Save</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/userProfile.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

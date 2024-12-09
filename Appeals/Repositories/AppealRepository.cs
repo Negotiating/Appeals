@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Appeals.Interfaces;
@@ -16,29 +17,29 @@ namespace Appeals.Repositories
             _context = context;
         }
 
-        public async Task<List<Appeal>> GetAll()
+        public async Task<IEnumerable<Appeal>> GetAllAsync()
         {
             return await _context.Appeals.ToListAsync();
         }
 
-        public async Task<Appeal> GetById(int id)
+        public async Task<Appeal> GetByIdAsync(int id)
         {
             return await _context.Appeals.FindAsync(id);
         }
 
-        public async Task Add(Appeal appeal)
+        public async Task AddAsync(Appeal appeal)
         {
             _context.Appeals.Add(appeal);
             await _context.SaveChangesAsync();
         }
         
-        public async Task Update(Appeal appeal)
+        public async Task UpdateAsync(Appeal appeal)
         {
             _context.Appeals.Update(appeal);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Appeal> Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var appeal = await _context.Appeals.FindAsync(id);
             if (appeal != null) 
@@ -46,7 +47,6 @@ namespace Appeals.Repositories
                 _context.Appeals.Remove(appeal);
                 await _context.SaveChangesAsync();
             }
-            return appeal;
         }
     }
 }

@@ -12,25 +12,25 @@ namespace Appeals.Services
             _appealRepository = appealRepository;
         }
 
-        public async Task<List<Appeal>> GetAll()
+        public async Task<IEnumerable<Appeal>> GetAllAsync()
         {
-            return await _appealRepository.GetAll();
+            return await _appealRepository.GetAllAsync();
         }
-        public async Task<Appeal> GetById(int id)
+        public async Task<Appeal> GetByIdAsync(int id)
         {
-            return await _appealRepository.GetById(id);
+            return await _appealRepository.GetByIdAsync(id);
         }
-        public async Task Add(Appeal appeal)
+        public async Task AddAsync(Appeal appeal)
         {
-            await _appealRepository.Add(appeal);
+            await _appealRepository.AddAsync(appeal);
         }
-        public async Task Update(Appeal appeal)
+        public async Task UpdateAsync(Appeal appeal)
         {
-            await _appealRepository.Update(appeal);
+            await _appealRepository.UpdateAsync(appeal);
         }
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            await _appealRepository.Delete(id);
+            await _appealRepository.DeleteAsync(id);
         }
         
     }

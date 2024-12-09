@@ -4,7 +4,7 @@ namespace Appeals.Interfaces
 {
     public interface IAppealRepository
     {
-        Task<List<Appeal>> GetAllAsync();
+        Task<IEnumerable<Appeal>> GetAllAsync();
         Task<Appeal> GetByIdAsync(int id);
         Task AddAsync(Appeal appeal);
         Task UpdateAsync(Appeal appeal);
