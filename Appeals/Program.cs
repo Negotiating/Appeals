@@ -1,15 +1,22 @@
 using Appeals.Data;
 using Appeals.Interfaces;
+using Appeals.Models;
 using Appeals.Repositories;
 using Appeals.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppealsDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<Appeals.Data.AppealsDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<IAdressRepository, AddressRepository>();
+
+builder.Services.AddScoped<IAppealRepository, AppealRepository>();
+builder.Services.AddScoped<IAppealService, AppealService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

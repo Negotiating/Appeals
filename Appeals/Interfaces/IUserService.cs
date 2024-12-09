@@ -4,10 +4,10 @@ namespace Appeals.Interfaces
 {
     public interface IUserService
     {
-        Task<IEnumerable<User>> GetUsersAsync();
-        Task<User> GetUserByIdAsync(int id);
-        Task AddUserAsync(User user);
-        Task DeleteUserAsync(int id);
-        Task UpdateUserAsync(User user);
+        Task<IEnumerable<User>> GetAllAsync();
+        Task<User> GetByIdAsync(int id);
+        Task AddAsync(User user);
+        Task DeleteAsync(int id);
+        Task UpdateAsync(User user);
     }
 }
