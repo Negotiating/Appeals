@@ -1,4 +1,8 @@
-document.addEventListener('DOMContentLoaded', () => {
+function sayHello() {
+    alert('Hello, World!');
+}
+
+/*document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('userProfileForm');
     const saveBtn = document.getElementById('saveBtn');
     const cancelBtn = document.getElementById('cancelBtn');
@@ -146,3 +150,4 @@ function showErrorMessage(message) {
     // Implement your preferred notification system
     alert(message);
 }
+*/
