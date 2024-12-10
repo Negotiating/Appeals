@@ -113,7 +113,7 @@
 
     // Функция для открытия модального окна с данными обращения
     function openModal(appeal) {
-        document.getElementById('modalTitle').innerText = 'Просмотр обращения';
+        document.getElementById('modalTitle').innerText = appeal.title; // Устанавливаем заголовок модального окна
         document.getElementById('theme').value = appeal.theme;
         document.getElementById('title').value = appeal.title;
         document.getElementById('status').value = appeal.status;
