@@ -78,6 +78,10 @@
         document.getElementById('title').readOnly = false;
         document.getElementById('status').readOnly = false;
         document.getElementById('creationDate').readOnly = false;
+        document.getElementById('saveButton').style.display = 'inline-block';
+        document.getElementById('sendButton').style.display = 'inline-block';
+        document.getElementById('cancelButton').style.display = 'inline-block';
+        document.getElementById('deleteButton').style.display = 'none';
     });
 
     // Закрытие модального окна
@@ -118,6 +122,18 @@
         document.getElementById('title').readOnly = true;
         document.getElementById('status').readOnly = true;
         document.getElementById('creationDate').readOnly = true;
+
+        if (appeal.status === 'Черновик') {
+            document.getElementById('saveButton').style.display = 'inline-block';
+            document.getElementById('sendButton').style.display = 'none';
+        } else {
+            document.getElementById('saveButton').style.display = 'none';
+            document.getElementById('sendButton').style.display = 'none';
+        }
+
+        document.getElementById('cancelButton').style.display = 'inline-block';
+        document.getElementById('deleteButton').style.display = 'inline-block';
+
         document.getElementById('addAppealModal').style.display = 'block';
     }
 
@@ -126,5 +142,52 @@
         document.getElementById('statusFilter').value = '';
         document.getElementById('dateRangeFilter').value = '';
         filterAppeals();
+    });
+
+    // Обработчик событий для кнопки "Сохранить"
+    document.getElementById('saveButton').addEventListener('click', function() {
+        const appeal = {
+            theme: document.getElementById('theme').value,
+            title: document.getElementById('title').value,
+            status: 'Черновик',
+            creationDate: document.getElementById('creationDate').value,
+            date: new Date(document.getElementById('creationDate').value)
+        };
+
+        appeals.push(appeal);
+        filterAppeals();
+        document.getElementById('addAppealModal').style.display = 'none';
+    });
+
+    // Обработчик событий для кнопки "Отправить"
+    document.getElementById('sendButton').addEventListener('click', function() {
+        const appeal = {
+            theme: document.getElementById('theme').value,
+            title: document.getElementById('title').value,
+            status: 'Зарегистрировано',
+            creationDate: document.getElementById('creationDate').value,
+            date: new Date(document.getElementById('creationDate').value)
+        };
+
+        appeals.push(appeal);
+        filterAppeals();
+        document.getElementById('addAppealModal').style.display = 'none';
+    });
+
+    // Обработчик событий для кнопки "Отмена"
+    document.getElementById('cancelButton').addEventListener('click', function() {
+        document.getElementById('addAppealModal').style.display = 'none';
+    });
+
+    // Обработчик событий для кнопки "Удалить"
+    document.getElementById('deleteButton').addEventListener('click', function() {
+        if (confirm('Вы действительно хотите удалить это обращение?')) {
+            const appealIndex = appeals.findIndex(appeal => appeal.creationDate === document.getElementById('creationDate').value);
+            if (appealIndex !== -1) {
+                appeals.splice(appealIndex, 1);
+                filterAppeals();
+                document.getElementById('addAppealModal').style.display = 'none';
+            }
+        }
     });
 });
