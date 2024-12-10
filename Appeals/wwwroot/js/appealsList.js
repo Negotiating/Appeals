@@ -17,6 +17,7 @@
         onChange: filterAppeals
     });
 
+    // Инициализация календаря для выбора одной даты
     flatpickr("#creationDate", {
         dateFormat: "Y-m-d",
     });
@@ -36,6 +37,9 @@
             if (dates.length === 2) {
                 startDate = new Date(dates[0]);
                 endDate = new Date(dates[1]);
+            } else {
+                startDate = new Date(dates[0]);
+                endDate = startDate;
             }
         }
 
