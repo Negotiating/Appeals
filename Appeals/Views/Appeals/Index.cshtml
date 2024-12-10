@@ -41,8 +41,10 @@
 <!-- Включение модального окна -->
 <div id="addAppealModal" class="modal">
     <div class="modal-content profile-container">
-        <span class="close">&times;</span>
-        <h1 id="modalTitle">Просмотр обращения</h1>
+        <div class="modal-header">
+            <h1 id="modalTitle">Просмотр обращения</h1>
+            <span class="close">&times;</span>
+        </div>
         <form id="viewAppealForm">
             <div class="form-group">
                 <label for="theme">Тема:</label>
@@ -69,6 +71,7 @@
         </form>
     </div>
 </div>
+
 
 
 @section Scripts {
