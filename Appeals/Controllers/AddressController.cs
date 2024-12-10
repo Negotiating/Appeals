@@ -4,7 +4,7 @@ using Appeals.Models;
 
 namespace Appeals.Controllers
 {
-    [Route("[Address]")]
+    [Route("[controller]")]
     public class AddressController : Controller
     {
         private readonly IAddressService _addressService;

@@ -12,8 +12,8 @@ builder.Services.AddDbContext<Appeals.Data.AppealsDbContext>(options => options.
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IAdressRepository, AddressRepository>();
+builder.Services.AddScoped<IAddressService, AddressService>();
 
 builder.Services.AddScoped<IAppealRepository, AppealRepository>();
 builder.Services.AddScoped<IAppealService, AppealService>();

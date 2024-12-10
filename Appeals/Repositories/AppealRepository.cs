@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 using Appeals.Interfaces;
 using Appeals.Models;
+using AppealsDbContext = Appeals.Data.AppealsDbContext;
 
 namespace Appeals.Repositories
 {

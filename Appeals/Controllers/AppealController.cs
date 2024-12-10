@@ -4,7 +4,7 @@ using Appeals.Models;
 
 namespace Appeals.Controllers
 {
-    [Route("[Appeal]")]
+    [Route("[controller]")]
     public class AppealController : Controller
     {
        private readonly IAppealService _appealService;

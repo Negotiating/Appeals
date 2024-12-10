@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Appeals.Controllers
 {
-    [Route("[User]")]
+    [Route("[controller]")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;

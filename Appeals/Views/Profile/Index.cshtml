@@ -6,61 +6,61 @@
     <h1>User Profile</h1>
     <form id="userProfileForm" asp-controller="Profile" asp-action="Save" method="post">
         <div class="form-group">
-            <label class="Name">Name</label>
-            <input class="Name" class="form-control" required />
+            <label for="Name">Name</label>
+            <input id="Name" class="form-control" required />
             <span validation="Name" class="error-message"></span>
         </div>
 
         <div class="form-group">
-            <label class="Surname">Surname</label>
-            <input class="Surname" class="form-control" required />
+            <label for="Surname">Surname</label>
+            <input id="Surname" class="form-control" required />
             <span validation="Surname" class="error-message"></span>
         </div>
 
         <div class="form-group">
-            <label class="MiddleName">MiddleName</label>
-            <input class="MiddleName" class="form-control" />
+            <label for="MiddleName">MiddleName</label>
+            <input id="MiddleName" class="form-control" />
         </div>
 
         <div class="form-group">
-            <label class="DateOfBirth">DateOfBirth</label>
-            <input class="DateOfBirth" type="date" class="form-control" />
+            <label for="DateOfBirth">DateOfBirth</label>
+            <input id="DateOfBirth" type="date" class="form-control" />
         </div>
 
         <div class="form-group">
-            <label class="Email">Email</label>
-            <input class="Email" type="email" class="form-control" required />
+            <label for="Email">Email</label>
+            <input id="Email" type="email" class="form-control" required />
             <span validation="Email" class="error-message"></span>
         </div>
 
         <div class="address-group">
             <div class="form-group">
-                <label class="City">City</label>
+                <label for="City">City</label>
                 <div class="input-with-suggestions">
-                    <input class="City" class="form-control" required />
+                    <input id="City" class="form-control" required />
                     <div class="suggestions" id="citySuggestions"></div>
                 </div>
                 <span validation="City" class="error-message"></span>
             </div>
 
             <div class="form-group">
-                <label class="Street">Street</label>
+                <label for="Street">Street</label>
                 <div class="input-with-suggestions">
-                    <input class="Street" class="form-control" required />
+                    <input id="Street" class="form-control" required />
                     <div class="suggestions" id="streetSuggestions"></div>
                 </div>
                 <span validation="Street" class="error-message"></span>
             </div>
 
             <div class="form-group">
-                <label class="House">House</label>
-                <input class="House" class="form-control" required />
+                <label for="House">House</label>
+                <input id="House" class="form-control" required />
                 <span validation="House" class="error-message"></span>
             </div>
 
             <div class="form-group">
-                <label class="Apartment">Apartment</label>
-                <input class="Apartment" class="form-control" required />
+                <label for="Apartment">Apartment</label>
+                <input id="Apartment" class="form-control" required />
                 <span validation="Apartment" class="error-message"></span>
             </div>
         </div>
