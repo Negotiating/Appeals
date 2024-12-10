@@ -1,8 +1,5 @@
-function sayHello() {
-    alert('Hello, World!');
-}
 
-/*document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('userProfileForm');
     const saveBtn = document.getElementById('saveBtn');
     const cancelBtn = document.getElementById('cancelBtn');
@@ -82,8 +79,8 @@ function sayHello() {
 function toggleActionButtons(show) {
     const saveBtn = document.getElementById('saveBtn');
     const cancelBtn = document.getElementById('cancelBtn');
-    saveBtn.classList.toggle('hidden', !show);
-    cancelBtn.classList.toggle('hidden', !show);
+    saveBtn.classList.toggle('hidden', show);
+    cancelBtn.classList.toggle('hidden', show);
 }
 
 async function setupAddressAutocomplete(fieldId) {
@@ -150,4 +147,3 @@ function showErrorMessage(message) {
     // Implement your preferred notification system
     alert(message);
 }
-*/
