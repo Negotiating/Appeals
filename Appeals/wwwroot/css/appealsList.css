@@ -25,9 +25,17 @@ body {
     border-radius: 8px;
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
 h1 {
-    text-align: center;
+    text-align: left;
     color: var(--primary-color);
+    margin: 0;
 }
 
 .filters {
@@ -38,18 +46,18 @@ h1 {
     flex-wrap: wrap;
 }
 
-    .filters label {
-        margin-right: 10px;
-        color: var(--secondary-color);
-    }
+.filters label {
+    margin-right: 10px;
+    color: var(--secondary-color);
+}
 
-    .filters select, .filters input, .filters button {
-        padding: 5px;
-        border: 1px solid var(--border-color);
-        border-radius: 4px;
-        flex: 1;
-        margin: 5px;
-    }
+.filters select, .filters input, .filters button {
+    padding: 5px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    flex: 1;
+    margin: 5px;
+}
 
 #clearFiltersButton {
     background-color: var(--border-color);
@@ -58,9 +66,9 @@ h1 {
     cursor: pointer;
 }
 
-    #clearFiltersButton:hover {
-        background-color: var(--secondary-color);
-    }
+#clearFiltersButton:hover {
+    background-color: var(--secondary-color);
+}
 
 #addAppealButton {
     padding: 10px 20px;
@@ -69,12 +77,11 @@ h1 {
     background-color: var(--primary-color);
     color: #ffffff;
     cursor: pointer;
-    margin-bottom: 20px;
 }
 
-    #addAppealButton:hover {
-        background-color: var(--hover-color);
-    }
+#addAppealButton:hover {
+    background-color: var(--hover-color);
+}
 
 .appeals-table {
     width: 100%;
@@ -82,23 +89,23 @@ h1 {
     margin-bottom: 20px;
 }
 
-    .appeals-table th, .appeals-table td {
-        padding: 12px;
-        text-align: left;
-    }
+.appeals-table th, .appeals-table td {
+    padding: 12px;
+    text-align: left;
+}
 
-    .appeals-table th {
-        background-color: var(--background-color);
-        color: var(--primary-color);
-    }
+.appeals-table th {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
 
-    .appeals-table tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
+.appeals-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
 
-    .appeals-table tr:hover {
-        background-color: #e2f7ff;
-    }
+.appeals-table tr:hover {
+    background-color: #e2f7ff;
+}
 
 .status-badge {
     display: inline-block;
@@ -147,10 +154,10 @@ h1 {
         align-items: flex-start;
     }
 
-        .filters label, .filters select, .filters input {
-            width: 100%;
-            margin-bottom: 10px;
-        }
+    .filters label, .filters select, .filters input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
 
     .appeals-table {
         font-size: 14px;
@@ -195,12 +202,12 @@ h1 {
     font-weight: bold;
 }
 
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 .form-group {
     margin-bottom: 1.5rem;
@@ -222,8 +229,8 @@ label {
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-    .form-control:focus {
-        outline: none;
-        border-color: var(--secondary-color);
-        box-shadow: 0 0 0 3px rgba(113, 128, 150, 0.2);
-    }
+.form-control:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(113, 128, 150, 0.2);
+}

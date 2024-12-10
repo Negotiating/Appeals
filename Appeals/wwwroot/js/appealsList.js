@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
+﻿document.addEventListener('DOMContentLoaded', function() {
     // Пример данных обращений
     let appeals = [
         { theme: 'Водоснабжение', title: 'Проблема с водоснабжением', status: 'Черновик', creationDate: '2023-10-01', date: new Date('2023-10-01') },
@@ -10,13 +10,9 @@
         { theme: 'Уборка территории', title: 'Проблема с уборкой территории', status: 'Отклонено', creationDate: '2023-10-07', date: new Date('2023-10-07') }
     ];
 
-    // Инициализация календарей
-    flatpickr("#startDateFilter", {
-        dateFormat: "Y-m-d",
-        onChange: filterAppeals
-    });
-
-    flatpickr("#endDateFilter", {
+    // Инициализация календаря для выбора диапазона дат
+    flatpickr("#dateRangeFilter", {
+        mode: "range",
         dateFormat: "Y-m-d",
         onChange: filterAppeals
     });
@@ -28,15 +24,25 @@
     // Функция для фильтрации и сортировки обращений
     function filterAppeals() {
         const statusFilter = document.getElementById('statusFilter').value;
-        const startDateFilter = document.getElementById('startDateFilter').value;
-        const endDateFilter = document.getElementById('endDateFilter').value;
+        const dateRangeFilter = document.getElementById('dateRangeFilter').value;
         const appealsList = document.getElementById('appeals-list');
         appealsList.innerHTML = '';
 
+        let startDate = null;
+        let endDate = null;
+
+        if (dateRangeFilter) {
+            const dates = dateRangeFilter.split(' to ');
+            if (dates.length === 2) {
+                startDate = new Date(dates[0]);
+                endDate = new Date(dates[1]);
+            }
+        }
+
         const filteredAppeals = appeals.filter(appeal => {
             const matchesStatus = statusFilter === '' || appeal.status === statusFilter;
-            const matchesDate = (startDateFilter === '' || new Date(appeal.creationDate) >= new Date(startDateFilter)) &&
-                (endDateFilter === '' || new Date(appeal.creationDate) <= new Date(endDateFilter));
+            const matchesDate = (!startDate || new Date(appeal.creationDate) >= startDate) &&
+                                (!endDate || new Date(appeal.creationDate) <= endDate);
             return matchesStatus && matchesDate;
         });
 
@@ -50,7 +56,7 @@
                 <td><span class="status-badge status-${appeal.status.toLowerCase()}">${appeal.status}</span></td>
                 <td>${appeal.creationDate}</td>
             `;
-            row.addEventListener('click', function () {
+            row.addEventListener('click', function() {
                 openModal(appeal);
             });
             appealsList.appendChild(row);
@@ -61,7 +67,7 @@
     filterAppeals();
 
     // Открытие модального окна
-    document.getElementById('addAppealButton').addEventListener('click', function () {
+    document.getElementById('addAppealButton').addEventListener('click', function() {
         document.getElementById('modalTitle').innerText = 'Добавить новое обращение';
         document.getElementById('addAppealModal').style.display = 'block';
         document.getElementById('theme').readOnly = false;
@@ -71,50 +77,50 @@
     });
 
     // Закрытие модального окна
-    document.querySelector('.close').addEventListener('click', function () {
+    document.querySelector('.close').addEventListener('click', function() {
         document.getElementById('addAppealModal').style.display = 'none';
     });
-// Обработка отправки формы
-document.getElementById('addAppealForm').addEventListener('submit', function (event) {
-    event.preventDefault();
-    const theme = document.getElementById('theme').value;
-    const title = document.getElementById('title').value;
-    const status = document.getElementById('status').value;
-    const creationDate = document.getElementById('creationDate').value;
 
-    const newAppeal = {
-        theme: theme,
-        title: title,
-        status: status,
-        creationDate: creationDate,
-        date: new Date(creationDate)
-    };
+    // Обработка отправки формы
+    document.getElementById('addAppealForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const theme = document.getElementById('theme').value;
+        const title = document.getElementById('title').value;
+        const status = document.getElementById('status').value;
+        const creationDate = document.getElementById('creationDate').value;
 
-    appeals.push(newAppeal);
-    filterAppeals();
-    document.getElementById('addAppealModal').style.display = 'none';
-    document.getElementById('addAppealForm').reset();
-});
+        const newAppeal = {
+            theme: theme,
+            title: title,
+            status: status,
+            creationDate: creationDate,
+            date: new Date(creationDate)
+        };
 
-// Функция для открытия модального окна с данными обращения
-function openModal(appeal) {
-    document.getElementById('modalTitle').innerText = 'Просмотр обращения';
-    document.getElementById('theme').value = appeal.theme;
-    document.getElementById('title').value = appeal.title;
-    document.getElementById('status').value = appeal.status;
-    document.getElementById('creationDate').value = appeal.creationDate;
-    document.getElementById('theme').readOnly = true;
-    document.getElementById('title').readOnly = true;
-    document.getElementById('status').readOnly = true;
-    document.getElementById('creationDate').readOnly = true;
-    document.getElementById('addAppealModal').style.display = 'block';
-}
+        appeals.push(newAppeal);
+        filterAppeals();
+        document.getElementById('addAppealModal').style.display = 'none';
+        document.getElementById('addAppealForm').reset();
+    });
 
-// Обработчик событий для кнопки сброса фильтра
-document.getElementById('clearFiltersButton').addEventListener('click', function () {
-    document.getElementById('statusFilter').value = '';
-    document.getElementById('startDateFilter').value = '';
-    document.getElementById('endDateFilter').value = '';
-    filterAppeals();
-});
+    // Функция для открытия модального окна с данными обращения
+    function openModal(appeal) {
+        document.getElementById('modalTitle').innerText = 'Просмотр обращения';
+        document.getElementById('theme').value = appeal.theme;
+        document.getElementById('title').value = appeal.title;
+        document.getElementById('status').value = appeal.status;
+        document.getElementById('creationDate').value = appeal.creationDate;
+        document.getElementById('theme').readOnly = true;
+        document.getElementById('title').readOnly = true;
+        document.getElementById('status').readOnly = true;
+        document.getElementById('creationDate').readOnly = true;
+        document.getElementById('addAppealModal').style.display = 'block';
+    }
+
+    // Обработчик событий для кнопки сброса фильтра
+    document.getElementById('clearFiltersButton').addEventListener('click', function() {
+        document.getElementById('statusFilter').value = '';
+        document.getElementById('dateRangeFilter').value = '';
+        filterAppeals();
+    });
 });
