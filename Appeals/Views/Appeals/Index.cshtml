@@ -7,6 +7,7 @@
         <h1>Список обращений</h1>
         <button id="addAppealButton">Добавить новое обращение</button>
     </div>
+    <div id="errorMessage" class="error-message hidden"></div>
     <div class="filters">
         <label for="statusFilter">Фильтр по статусу:</label>
         <select id="statusFilter" onchange="filterAppeals()">
@@ -41,10 +42,8 @@
 <!-- Включение модального окна -->
 <div id="addAppealModal" class="modal">
     <div class="modal-content profile-container">
-        <div class="modal-header">
-            <h1 id="modalTitle">Просмотр обращения</h1>
-            <span class="close">&times;</span>
-        </div>
+        <span class="close">&times;</span>
+        <h1 id="modalTitle">Просмотр обращения</h1>
         <form id="viewAppealForm">
             <div class="form-group">
                 <label for="theme">Тема:</label>
@@ -71,8 +70,6 @@
         </form>
     </div>
 </div>
-
-
 
 @section Scripts {
     <script src="~\js\appealsList.js"></script>

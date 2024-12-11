@@ -296,3 +296,13 @@ label {
 .hidden {
     display: none !important;
 }
+
+.error-message {
+    background-color: var(--error-color);
+    color: white;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    text-align: center;
+}
+

@@ -13,9 +13,17 @@
 
     // Функция для загрузки данных с сервера
     async function loadAppeals() {
-        const response = await fetch('/Appeals/GetAllAppeals');
-        const appeals = await response.json();
-        return appeals;
+        try {
+            const response = await fetch('/Appeals/GetAllAppeals');
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            const appeals = await response.json();
+            return appeals;
+        } catch (error) {
+            showErrorMessage(error.message);
+            return [];
+        }
     }
 
     // Функция для фильтрации и сортировки обращений
@@ -103,18 +111,24 @@
             date: new Date(creationDate)
         };
 
-        const response = await fetch('/Appeals/AddAppeal', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newAppeal)
-        });
+        try {
+            const response = await fetch('/Appeals/AddAppeal', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newAppeal)
+            });
 
-        if (response.ok) {
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+
             filterAppeals();
             document.getElementById('addAppealModal').style.display = 'none';
             document.getElementById('addAppealForm').reset();
+        } catch (error) {
+            showErrorMessage(error.message);
         }
     });
 
@@ -161,17 +175,23 @@
             date: new Date(document.getElementById('creationDate').value)
         };
 
-        const response = await fetch('/Appeals/UpdateAppeal', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(appeal)
-        });
+        try {
+            const response = await fetch('/Appeals/UpdateAppeal', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(appeal)
+            });
 
-        if (response.ok) {
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+
             filterAppeals();
             document.getElementById('addAppealModal').style.display = 'none';
+        } catch (error) {
+            showErrorMessage(error.message);
         }
     });
 
@@ -185,17 +205,23 @@
             date: new Date(document.getElementById('creationDate').value)
         };
 
-        const response = await fetch('/Appeals/UpdateAppeal', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(appeal)
-        });
+        try {
+            const response = await fetch('/Appeals/UpdateAppeal', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(appeal)
+            });
 
-        if (response.ok) {
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+
             filterAppeals();
             document.getElementById('addAppealModal').style.display = 'none';
+        } catch (error) {
+            showErrorMessage(error.message);
         }
     });
 
@@ -208,14 +234,33 @@
     document.getElementById('deleteButton').addEventListener('click', async function() {
         if (confirm('Вы действительно хотите удалить это обращение?')) {
             const appealId = document.getElementById('creationDate').value;
-            const response = await fetch(`/Appeals/DeleteAppeal/${appealId}`, {
-                method: 'DELETE'
-            });
+            try {
+                const response = await fetch(`/Appeals/DeleteAppeal/${appealId}`, {
+                    method: 'DELETE'
+                });
 
-            if (response.ok) {
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status}`);
+                }
+
                 filterAppeals();
                 document.getElementById('addAppealModal').style.display = 'none';
+            } catch (error) {
+                showErrorMessage(error.message);
             }
         }
     });
+
+    // Функция для отображения сообщений об ошибках
+    function showErrorMessage(message) {
+        const errorMessageElement = document.getElementById('errorMessage');
+        errorMessageElement.innerText = message;
+        errorMessageElement.classList.remove('hidden');
+    }
+
+    // Функция для скрытия сообщений об ошибках
+    function hideErrorMessage() {
+        const errorMessageElement = document.getElementById('errorMessage');
+        errorMessageElement.classList.add('hidden');
+    }
 });
