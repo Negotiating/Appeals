@@ -1,15 +1,15 @@
 ﻿using Appeals.Interfaces;
 using Appeals.Models;
 using Microsoft.EntityFrameworkCore;
-using AppealsDbContext = Appeals.Data.AppealsDbContext;
+using AppDbContext = Appeals.Data.AppDbContext;
 
 namespace Appeals.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly AppealsDbContext _context;
+        private readonly AppDbContext _context;
 
-        public UserRepository(AppealsDbContext context) 
+        public UserRepository(AppDbContext context) 
         {
             _context = context;
         }

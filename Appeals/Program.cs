@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<Appeals.Data.AppealsDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<Appeals.Data.AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -15,6 +15,12 @@ builder.Services.AddScoped<IAddressService, AddressService>();
 
 builder.Services.AddScoped<IAppealRepository, AppealRepository>();
 builder.Services.AddScoped<IAppealService, AppealService>();
+
+builder.Services.AddScoped<ITopicRepository, TopicRepository>();
+builder.Services.AddScoped<ITopicService, TopicService>();
+
+builder.Services.AddScoped<IStatusRepository, StatusRepository>();
+builder.Services.AddScoped<IStatusService, StatusService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

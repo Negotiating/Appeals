@@ -12,9 +12,19 @@ namespace Appeals.Services
             _appealRepository = appealRepository;
         }
 
-        public async Task<IEnumerable<Appeal>> GetAllAsync()
+        public async Task<IEnumerable<AppealDTO>> GetAllAsync()
         {
-            return await _appealRepository.GetAllAsync();
+            var appeals = await _appealRepository.GetAllAsync();
+            return appeals.Select(appeal => new AppealDTO
+            {
+                Id = appeal.Id,
+                Title = appeal.Title,
+                Text = appeal.Text,
+                CreationDate = appeal.CreationDate,
+                DecisionDate = appeal.DecisionDate,
+                Status = new StatusDTO { Id = appeal.IdStatus},
+                Topic = new TopicDTO { Id = appeal.IdTopic }
+            });
         }
         public async Task<Appeal> GetByIdAsync(int id)
         {

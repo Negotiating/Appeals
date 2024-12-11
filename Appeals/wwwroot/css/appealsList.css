@@ -115,31 +115,31 @@ h1 {
     font-weight: bold;
 }
 
-.status-new {
+.status-1 {
     background-color: var(--secondary-color);
 }
 
-.status-registered {
+.status-2 {
     background-color: #d9ad26;
 }
 
-.status-checking {
+.status-3 {
     background-color: #ff851b;
 }
 
-.status-execution {
+.status-4 {
     background-color: #ffd700;
 }
 
-.status-working {
+.status-5 {
     background-color: #43a047;
 }
 
-.status-completed {
+.status-6 {
     background-color: var(--primary-color);
 }
 
-.status-rejected {
+.status-7 {
     background-color: #e60000;
 }
 

@@ -4,7 +4,7 @@ namespace Appeals.Interfaces
 {
     public interface IAppealService
     {
-        Task<IEnumerable<Appeal>> GetAllAsync();
+        Task<IEnumerable<AppealDTO>> GetAllAsync();
         Task<Appeal> GetByIdAsync(int id);
         Task AddAsync(Appeal appeal);
         Task UpdateAsync(Appeal appeal);

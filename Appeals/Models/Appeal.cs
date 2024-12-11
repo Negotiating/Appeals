@@ -41,7 +41,7 @@ public partial class Appeal
     [NotMapped]
     public virtual ICollection<History> Histories { get; set; } = new List<History>();
 
-    [NotMapped] 
+    [NotMapped]
     public virtual User IdExecutorNavigation { get; set; } = null!;
 
     [NotMapped]
