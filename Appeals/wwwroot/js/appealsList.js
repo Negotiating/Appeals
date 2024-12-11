@@ -1,15 +1,4 @@
 ﻿document.addEventListener('DOMContentLoaded', function() {
-    // Пример данных обращений
-    let appeals = [
-        { theme: 'Водоснабжение', title: 'Проблема с водоснабжением', status: 'Черновик', creationDate: '2023-10-01', date: new Date('2023-10-01') },
-        { theme: 'Ремонт', title: 'Ремонт крыши', status: 'Зарегистрировано', creationDate: '2023-10-02', date: new Date('2023-10-02') },
-        { theme: 'Освещение', title: 'Проблема с освещением', status: 'На проверке', creationDate: '2023-10-03', date: new Date('2023-10-03') },
-        { theme: 'Отопление', title: 'Проблема с отоплением', status: 'К исполнению', creationDate: '2023-10-04', date: new Date('2023-10-04') },
-        { theme: 'Канализация', title: 'Проблема с канализацией', status: 'В работе', creationDate: '2023-10-05', date: new Date('2023-10-05') },
-        { theme: 'Общественный транспорт', title: 'Проблема с общественным транспортом', status: 'Выполнено', creationDate: '2023-10-06', date: new Date('2023-10-06') },
-        { theme: 'Уборка территории', title: 'Проблема с уборкой территории', status: 'Отклонено', creationDate: '2023-10-07', date: new Date('2023-10-07') }
-    ];
-
     // Инициализация календаря для выбора диапазона дат
     flatpickr("#dateRangeFilter", {
         mode: "range",
@@ -22,8 +11,16 @@
         dateFormat: "Y-m-d",
     });
 
+    // Функция для загрузки данных с сервера
+    async function loadAppeals() {
+        const response = await fetch('/Appeals/GetAllAppeals');
+        const appeals = await response.json();
+        return appeals;
+    }
+
     // Функция для фильтрации и сортировки обращений
-    function filterAppeals() {
+    async function filterAppeals() {
+        const appeals = await loadAppeals();
         const statusFilter = document.getElementById('statusFilter').value;
         const dateRangeFilter = document.getElementById('dateRangeFilter').value;
         const appealsList = document.getElementById('appeals-list');
@@ -44,20 +41,21 @@
         }
 
         const filteredAppeals = appeals.filter(appeal => {
-            const matchesStatus = statusFilter === '' || appeal.status === statusFilter;
+            const matchesStatus = statusFilter === '' || appeal.idStatusNavigation.name === statusFilter;
             const matchesDate = (!startDate || new Date(appeal.creationDate) >= startDate) &&
                                 (!endDate || new Date(appeal.creationDate) <= endDate);
             return matchesStatus && matchesDate;
         });
 
+        // Сортировка по дате создания
         filteredAppeals.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
 
         filteredAppeals.forEach(appeal => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${appeal.theme}</td>
+                <td>${appeal.idTopicNavigation.name}</td>
                 <td>${appeal.title}</td>
-                <td><span class="status-badge status-${appeal.status.toLowerCase()}">${appeal.status}</span></td>
+                <td><span class="status-badge status-${appeal.idStatusNavigation.name.toLowerCase()}">${appeal.idStatusNavigation.name}</span></td>
                 <td>${appeal.creationDate}</td>
             `;
             row.addEventListener('click', function() {
@@ -90,7 +88,7 @@
     });
 
     // Обработка отправки формы
-    document.getElementById('addAppealForm').addEventListener('submit', function(event) {
+    document.getElementById('addAppealForm').addEventListener('submit', async function(event) {
         event.preventDefault();
         const theme = document.getElementById('theme').value;
         const title = document.getElementById('title').value;
@@ -105,25 +103,34 @@
             date: new Date(creationDate)
         };
 
-        appeals.push(newAppeal);
-        filterAppeals();
-        document.getElementById('addAppealModal').style.display = 'none';
-        document.getElementById('addAppealForm').reset();
+        const response = await fetch('/Appeals/AddAppeal', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newAppeal)
+        });
+
+        if (response.ok) {
+            filterAppeals();
+            document.getElementById('addAppealModal').style.display = 'none';
+            document.getElementById('addAppealForm').reset();
+        }
     });
 
     // Функция для открытия модального окна с данными обращения
     function openModal(appeal) {
         document.getElementById('modalTitle').innerText = appeal.title; // Устанавливаем заголовок модального окна
-        document.getElementById('theme').value = appeal.theme;
+        document.getElementById('theme').value = appeal.idTopicNavigation.name;
         document.getElementById('title').value = appeal.title;
-        document.getElementById('status').value = appeal.status;
+        document.getElementById('status').value = appeal.idStatusNavigation.name;
         document.getElementById('creationDate').value = appeal.creationDate;
         document.getElementById('theme').readOnly = true;
         document.getElementById('title').readOnly = true;
         document.getElementById('status').readOnly = true;
         document.getElementById('creationDate').readOnly = true;
 
-        if (appeal.status === 'Черновик') {
+        if (appeal.idStatusNavigation.name === 'Черновик') {
             document.getElementById('saveButton').style.display = 'inline-block';
             document.getElementById('sendButton').style.display = 'none';
         } else {
@@ -145,7 +152,7 @@
     });
 
     // Обработчик событий для кнопки "Сохранить"
-    document.getElementById('saveButton').addEventListener('click', function() {
+    document.getElementById('saveButton').addEventListener('click', async function() {
         const appeal = {
             theme: document.getElementById('theme').value,
             title: document.getElementById('title').value,
@@ -154,13 +161,22 @@
             date: new Date(document.getElementById('creationDate').value)
         };
 
-        appeals.push(appeal);
-        filterAppeals();
-        document.getElementById('addAppealModal').style.display = 'none';
+        const response = await fetch('/Appeals/UpdateAppeal', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(appeal)
+        });
+
+        if (response.ok) {
+            filterAppeals();
+            document.getElementById('addAppealModal').style.display = 'none';
+        }
     });
 
     // Обработчик событий для кнопки "Отправить"
-    document.getElementById('sendButton').addEventListener('click', function() {
+    document.getElementById('sendButton').addEventListener('click', async function() {
         const appeal = {
             theme: document.getElementById('theme').value,
             title: document.getElementById('title').value,
@@ -169,9 +185,18 @@
             date: new Date(document.getElementById('creationDate').value)
         };
 
-        appeals.push(appeal);
-        filterAppeals();
-        document.getElementById('addAppealModal').style.display = 'none';
+        const response = await fetch('/Appeals/UpdateAppeal', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(appeal)
+        });
+
+        if (response.ok) {
+            filterAppeals();
+            document.getElementById('addAppealModal').style.display = 'none';
+        }
     });
 
     // Обработчик событий для кнопки "Отмена"
@@ -180,11 +205,14 @@
     });
 
     // Обработчик событий для кнопки "Удалить"
-    document.getElementById('deleteButton').addEventListener('click', function() {
+    document.getElementById('deleteButton').addEventListener('click', async function() {
         if (confirm('Вы действительно хотите удалить это обращение?')) {
-            const appealIndex = appeals.findIndex(appeal => appeal.creationDate === document.getElementById('creationDate').value);
-            if (appealIndex !== -1) {
-                appeals.splice(appealIndex, 1);
+            const appealId = document.getElementById('creationDate').value;
+            const response = await fetch(`/Appeals/DeleteAppeal/${appealId}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
                 filterAppeals();
                 document.getElementById('addAppealModal').style.display = 'none';
             }
