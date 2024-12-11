@@ -22,6 +22,10 @@ builder.Services.AddScoped<ITopicService, TopicService>();
 builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 builder.Services.AddScoped<IStatusService, StatusService>();
 
+builder.Services.AddScoped<AppealAgregatorService>();
+
+
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

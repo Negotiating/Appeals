@@ -62,9 +62,9 @@
         filteredAppeals.forEach(appeal => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${appeal.Topic.name}</td>
+                <td>${appeal.topic.name}</td>
                 <td>${appeal.title}</td>
-                <td><span class="status-badge status-${appeal.Status.Id.toLowerCase()}">${appeal.Status.name}</span></td>
+                <td><span class="status-badge status-${appeal.status.id}">${appeal.status.name}</span></td>
                 <td>${appeal.creationDate}</td>
             `;
             row.addEventListener('click', function() {
