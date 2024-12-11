@@ -136,16 +136,16 @@
     // Функция для открытия модального окна с данными обращения
     function openModal(appeal) {
         document.getElementById('modalTitle').innerText = appeal.title; // Устанавливаем заголовок модального окна
-        document.getElementById('theme').value = appeal.idTopicNavigation.name;
+        document.getElementById('theme').value = appeal.topic.name;
         document.getElementById('title').value = appeal.title;
-        document.getElementById('status').value = appeal.idStatusNavigation.name;
+        document.getElementById('status').value = appeal.status.name;
         document.getElementById('creationDate').value = appeal.creationDate;
         document.getElementById('theme').readOnly = true;
         document.getElementById('title').readOnly = true;
         document.getElementById('status').readOnly = true;
         document.getElementById('creationDate').readOnly = true;
 
-        if (appeal.idStatusNavigation.name === 'Черновик') {
+        if (appeal.status.id === 1) {
             document.getElementById('saveButton').style.display = 'inline-block';
             document.getElementById('sendButton').style.display = 'none';
         } else {
