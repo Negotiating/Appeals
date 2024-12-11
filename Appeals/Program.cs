@@ -1,6 +1,4 @@
-using Appeals.Data;
 using Appeals.Interfaces;
-using Appeals.Models;
 using Appeals.Repositories;
 using Appeals.Services;
 using Microsoft.EntityFrameworkCore;
