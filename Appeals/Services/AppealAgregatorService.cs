@@ -1,5 +1,6 @@
 ﻿using Appeals.Interfaces;
 using Appeals.Models;
+using Appeals.Mappers;
 
 namespace Appeals.Services
 {
@@ -30,25 +31,23 @@ namespace Appeals.Services
             var topics = await _topicService.GetAllAsync();
             var statuses = await _statusService.GetAllAsync();
 
-            var appealDtos = appeals.Select(appeal => new AppealDTO
-            {
-                Id = appeal.Id,
-                Title = appeal.Title,
-                Text = appeal.Text,
-                CreationDate = appeal.CreationDate,
-                DecisionDate = appeal.DecisionDate,
-                //IdStatus = appeal.IdStatus,
-                //IdExecutor = appeal.IdExecutor,
-                //IdResident = appeal.IdResident,
-                //IdPlot = appeal.IdPlot,
-                //IdTopic = appeal.IdTopic,
-                //Grade = appeal.Grade,
-                //DeletionDate = appeal.DeletionDate,
-                Topic = topics.FirstOrDefault(t => t.Id == appeal.IdTopic),
-                Status = statuses.FirstOrDefault(s => s.Id == appeal.IdStatus)
-            }).ToList();
-
+            var appealDtos = appeals.Select(appeal => Mapper.AppealToDTO(appeal, 
+                                                                         statuses.FirstOrDefault(s => s.Id == appeal.IdStatus), 
+                                                                         topics.FirstOrDefault(t => t.Id == appeal.IdTopic)))
+                                    .ToList();
             return appealDtos;
+        }
+        public async Task<AppealDTO> GetAppealByIdAsync(int id)
+        {
+            var appeal = await _appealService.GetByIdAsync(id);
+            var topic = await _topicService.GetByIdAsync(appeal.IdTopic);
+            var status = await _statusService.GetByIdAsync(appeal.IdStatus);
+            return Mapper.AppealToDTO(appeal, status, topic);
+        }
+
+        public async Task AddNewAppeal(AppealDTO appeal)
+        {
+
         }
     }
 }

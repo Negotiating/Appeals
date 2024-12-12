@@ -11,10 +11,9 @@ namespace Appeals.Services
         {
             _statusRepository = statusRepository;
         }
-        public async Task<IEnumerable<StatusDTO>> GetAllAsync()
+        public async Task<IEnumerable<Status>> GetAllAsync()
         {
-            var statuses = await _statusRepository.GetAllAsync();
-            return statuses.Select(status => new StatusDTO { Id = status.Id, Name = status.Name });
+            return await _statusRepository.GetAllAsync();
         }
         public async Task<Status> GetByIdAsync(int id)
         {

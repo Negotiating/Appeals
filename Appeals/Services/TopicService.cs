@@ -11,10 +11,9 @@ namespace Appeals.Services
         {
             _topicRepository = topicRepository;
         }
-        public async Task<IEnumerable<TopicDTO>> GetAllAsync()
+        public async Task<IEnumerable<Topic>> GetAllAsync()
         {
-            var topics =  await _topicRepository.GetAllAsync();
-            return topics.Select(topic => new TopicDTO { Id = topic.Id, Name = topic.Name });
+            return await _topicRepository.GetAllAsync();
         }
         public async Task<Topic> GetByIdAsync(int id)
         {

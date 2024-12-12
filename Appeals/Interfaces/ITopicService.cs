@@ -4,7 +4,7 @@ namespace Appeals.Interfaces
 {
     public interface ITopicService
     {
-        Task<IEnumerable<TopicDTO>> GetAllAsync();
+        Task<IEnumerable<Topic>> GetAllAsync();
         Task<Topic> GetByIdAsync(int id);
     }
 }
