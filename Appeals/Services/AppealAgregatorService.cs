@@ -25,6 +25,7 @@ namespace Appeals.Services
             _userService = userService;
         }
 
+        #region appeals
         public async Task<IEnumerable<AppealDTO>> GetAllAppealsAsync()
         {
             var appeals = await _appealService.GetAllAsync();
@@ -45,9 +46,32 @@ namespace Appeals.Services
             return Mapper.AppealToDTO(appeal, status, topic);
         }
 
-        public async Task AddNewAppeal(AppealDTO appeal)
+        public async Task AddNewAppeal(AppealDTO appealDto)
         {
+            var topic = await _topicService.GetByIdAsync(appealDto.Topic.Id);
+            var status = await _statusService.GetByIdAsync(appealDto.Status.Id);
+            appealDto.Status = Mapper.StatusToDTO(status);
+            appealDto.Topic = Mapper.TopicToDTO(topic);
 
+            await _appealService.AddAsync(Mapper.ToAppeal(appealDto));
         }
+        #endregion
+
+        #region topics
+        public async Task<IEnumerable<TopicDTO>> GetAllTopicsAsync()
+        {
+            var topics = await _topicService.GetAllAsync();
+            var tipicsDtos = topics.Select(topic => Mapper.TopicToDTO(topic)).ToList();
+            return tipicsDtos;
+        }
+        #endregion
+        #region statuses
+        public async Task<IEnumerable<StatusDTO>> GetAllStatusesAsync()
+        {
+            var statuses = await _statusService.GetAllAsync();
+            var statusDtos = statuses.Select(status => Mapper.StatusToDTO(status)).ToList();
+            return statusDtos;
+        }
+        #endregion
     }
 }

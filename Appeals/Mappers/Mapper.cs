@@ -13,13 +13,6 @@ namespace Appeals.Mappers
                 Text = appeal.Text,
                 CreationDate = appeal.CreationDate,
                 DecisionDate = appeal.DecisionDate,
-                //IdStatus = appeal.IdStatus,
-                //IdExecutor = appeal.IdExecutor,
-                //IdResident = appeal.IdResident,
-                //IdPlot = appeal.IdPlot,
-                //IdTopic = appeal.IdTopic,
-                //Grade = appeal.Grade,
-                //DeletionDate = appeal.DeletionDate,
                 Topic = TopicToDTO(topic),
                 Status = StatusToDTO(status)
             };
@@ -48,7 +41,33 @@ namespace Appeals.Mappers
         {
             return new Appeal
             {
+                Id = appealDTO.Id,
+                Title = appealDTO.Title,
+                Text = appealDTO.Text,
+                CreationDate = appealDTO.CreationDate,
+                DecisionDate = appealDTO.DecisionDate,
+                IdStatus = appealDTO.Status.Id,
+                IdStatusNavigation = ToStatus(appealDTO.Status),
+                IdTopic = appealDTO.Topic.Id,
+                IdTopicNavigation = ToTopic(appealDTO.Topic)
+            };
+        }
 
+        public static Status ToStatus(StatusDTO statusDTO)
+        {
+            return new Status
+            {
+                Id = statusDTO.Id,
+                Name = statusDTO.Name
+            };
+        }
+
+        public static Topic ToTopic(TopicDTO topicDTO)
+        {
+            return new Topic
+            {
+                Id = topicDTO.Id,
+                Name = topicDTO.Name
             };
         }
 

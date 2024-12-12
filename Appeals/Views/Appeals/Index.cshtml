@@ -10,16 +10,10 @@
     <div id="errorMessage" class="error-message hidden"></div>
     <div class="filters">
         <label for="statusFilter">Фильтр по статусу:</label>
-        <select id="statusFilter" onchange="filterAppeals()">
+        <select id="statusFilter" onchange="handleStatusFilterChange()">
             <option value="">Все</option>
-            <option value="Черновик">Черновик</option>
-            <option value="Зарегистрировано">Зарегистрировано</option>
-            <option value="На проверке">На проверке</option>
-            <option value="К исполнению">К исполнению</option>
-            <option value="В работе">В работе</option>
-            <option value="Выполнено">Выполнено</option>
-            <option value="Отклонено">Отклонено</option>
         </select>
+
         <label for="dateRangeFilter">Диапазон дат:</label>
         <input type="text" id="dateRangeFilter" placeholder="Выберите диапазон дат" readonly>
         <button id="clearFiltersButton">Сбросить фильтры</button>
@@ -42,23 +36,26 @@
 <!-- Включение модального окна -->
 <div id="addAppealModal" class="modal">
     <div class="modal-content profile-container">
-       
         <span class="close">&times;</span>
         <h1 id="modalTitle">Просмотр обращения</h1>
         <form id="viewAppealForm">
             <div class="form-group">
                 <label for="theme">Тема:</label>
-                <input type="text" id="theme" name="theme" class="form-control" readonly>
+                <select id="theme" name="theme" class="form-control" required></select>
             </div>
             <div class="form-group">
                 <label for="title">Заголовок:</label>
-                <input type="text" id="title" name="title" class="form-control" readonly>
+                <input type="text" id="title" name="title" class="form-control" required>
             </div>
             <div class="form-group">
+                <label for="content">Текст обращения:</label>
+                <textarea id="content" name="content" class="form-control" rows="10" required></textarea>
+            </div>
+            <div class="form-group" id="statusGroup" style="display: none;">
                 <label for="status">Статус:</label>
-                <input type="text" id="status" name="status" class="form-control" readonly>
+                <span id="statusBadge" class="status-badge"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="creationDateGroup" style="display: none;">
                 <label for="creationDate">Дата создания:</label>
                 <input type="text" id="creationDate" name="creationDate" class="form-control" readonly>
             </div>

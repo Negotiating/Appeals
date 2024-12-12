@@ -8,6 +8,7 @@ namespace Appeals.Controllers
     public class AppealsController : Controller
     {
         private readonly AppealAgregatorService _appealAgregatorService;
+        private readonly AppealService _appealService;
         public AppealsController(AppealAgregatorService appealAgregatorService)
         {
             _appealAgregatorService = appealAgregatorService;
@@ -33,11 +34,36 @@ namespace Appeals.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAppeal([FromBody] AppealDTO appeal)
+        public async Task<IActionResult> AddAppeal([FromBody]AppealDTO appeal)
         {
-            await _appealAgregatorService.AddNewAppeal(appeal);
-            //здесь хотелось бы конечно обработчик ошибок, но подумаем об этом потом
-            return Json(new { success = true });
+            if (appeal == null)
+            {
+                return BadRequest("Appeal data is null");
+            }
+            try
+            {
+                await _appealAgregatorService.AddNewAppeal(appeal);
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllTopics()
+        {
+            var topics = await _appealAgregatorService.GetAllTopicsAsync();
+            return Json(topics);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllStatuses()
+        {
+            var topics = await _appealAgregatorService.GetAllStatusesAsync();
+            return Json(topics);
         }
 
         //[HttpPut]
@@ -47,11 +73,11 @@ namespace Appeals.Controllers
         //    return Json(new { success = true });
         //}
 
-        //[HttpDelete]
-        //public async Task<IActionResult> DeleteAppeal(int id)
-        //{
-        //    await _appealService.DeleteAsync(id);
-        //    return Json(new { success = true });
-        //}
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAppeal(int id)
+        {
+            await _appealService.DeleteAsync(id);
+            return Json(new { success = true });
+        }
     }
 }
